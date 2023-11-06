@@ -79,9 +79,10 @@ def optimize_data(input_data: InputData, api_key: str = Depends(get_api_key)):
 
     # Add constraints for variable assignments
     for i in range(nbTasks):
-        solver.add(V[i] == tasks[i][1])
+        solver.add(V[i] == data.tasks[i][1])  # Assign workload values
         for j in range(nbTeams):
-            solver.add(Y[j][i] == tasks[i][j + 2])  # Assign workload variables
+            if j + 2 < len(data.tasks[i]):
+                solver.add(Y[j][i] == data.tasks[i][j + 2])
 
     # Add constraints for workload totals
     for j in range(nbTeams):
