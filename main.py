@@ -4,8 +4,22 @@ import json
 from z3 import *
 from fastapi.security import APIKeyHeader
 from fastapi import HTTPException, Depends
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
+
+# Define CORS settings
+origins = ["*"]  # You can specify allowed origins here. Use "*" to allow all.
+
+# Add the CORS middleware to your FastAPI app
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],  # You can specify the allowed HTTP methods here
+    allow_headers=["*"],  # You can specify the allowed headers here
+)
+
 
 class TaskItem(BaseModel):
     tasks: list
