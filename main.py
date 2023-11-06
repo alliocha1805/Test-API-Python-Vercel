@@ -97,14 +97,16 @@ def optimize_data(input_data: InputData, api_key: str = Depends(get_api_key)):
     if solver.check() == sat:
         model = solver.model()
         result = {
-            "ValeurTotale": model.eval(Vtot).as_long()
+            "ValeurTotale": model.eval(Vtot).as_long(),
+            "Feature":[],
+            "ChargeEquipes":[]
         }
 
         for i in range(nbTasks):
-            result[task_names[i]] = bool(model.eval(C[i]))
+            result["Feature"][task_names[i]] = bool(model.eval(C[i]))
 
         for j in range(nbTeams):
-            result["ChargeEquipe{}".format(j + 1)] = model.eval(Sum([If(C[i], Y[j][i], 0) for i in range(nbTasks)])).as_decimal(10)
+            result["ChargeEquipes"]["ChargeEquipe{}".format(j + 1)] = model.eval(Sum([If(C[i], Y[j][i], 0) for i in range(nbTasks)])).as_decimal(10)
 
         return result
     else:
