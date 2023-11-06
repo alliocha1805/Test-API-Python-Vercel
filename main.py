@@ -98,8 +98,8 @@ def optimize_data(input_data: InputData, api_key: str = Depends(get_api_key)):
         model = solver.model()
         result = {
             "ValeurTotale": model.eval(Vtot).as_long(),
-            "Feature":[],
-            "ChargeEquipes":[]
+            "Feature":{},
+            "ChargeEquipes":{}
         }
 
         for i in range(nbTasks):
