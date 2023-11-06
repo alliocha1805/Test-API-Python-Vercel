@@ -5,6 +5,7 @@ from z3 import *
 from fastapi.security import APIKeyHeader
 from fastapi import HTTPException, Depends
 from fastapi.middleware.cors import CORSMiddleware
+from typing import List, Union
 
 app = FastAPI()
 
@@ -22,7 +23,7 @@ app.add_middleware(
 
 
 class TaskItem(BaseModel):
-    tasks: list[list[Union[str, float]]]
+    tasks: List[List[Union[str, float]]]
     maxLoad: float
     model_config = {
         "json_schema_extra": {
