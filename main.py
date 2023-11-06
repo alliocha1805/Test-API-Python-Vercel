@@ -22,7 +22,7 @@ app.add_middleware(
 
 
 class TaskItem(BaseModel):
-    tasks: list
+    tasks: list[list[Union[str, float]]]
     maxLoad: float
     model_config = {
         "json_schema_extra": {
