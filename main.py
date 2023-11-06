@@ -66,6 +66,10 @@ def optimize_data(input_data: InputData, api_key: str = Depends(get_api_key)):
     nbTasks = len(tasks)
     nbTeams = len(tasks[0]) - 1  # Subtract 1 for the value V
 
+    # Extract task names and workloads
+    task_names = [task[0] for task in tasks]
+    task_workloads = [task[1:] for task in tasks]
+
     # Declare the variables
     V = [Int('V{}'.format(i + 1)) for i in range(nbTasks)]
     C = [Bool('C{}'.format(i + 1)) for i in range(nbTasks)]
@@ -96,7 +100,7 @@ def optimize_data(input_data: InputData, api_key: str = Depends(get_api_key)):
         }
 
         for i in range(nbTasks):
-            result["Tache{}".format(i + 1)] = bool(model.eval(C[i]))
+            result[task_names[i]] = bool(model.eval(C[i]))
 
         for j in range(nbTeams):
             result["ChargeEquipe{}".format(j + 1)] = model.eval(Sum([If(C[i], Y[j][i], 0) for i in range(nbTasks)])).as_decimal(10)
