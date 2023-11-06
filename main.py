@@ -65,7 +65,7 @@ def optimize_data(input_data: InputData, api_key: str = Depends(get_api_key)):
     tasks = data.tasks
     maxLoad = data.maxLoad
     nbTasks = len(tasks)
-    nbTeams = len(tasks[0]) - 1  # Subtract 1 for the value V
+    nbTeams = len(tasks[0]) - 2  # Subtract 1 for the value V
 
     # Extract task names and workloads
     task_names = [task[0] for task in tasks]
